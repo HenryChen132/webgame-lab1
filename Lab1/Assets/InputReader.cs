@@ -7,6 +7,9 @@ public class InputReader : ScriptableObject
 {
     public event Action<Vector2> MoveEvent;
 
+
+    public event Action JumpEvent;
+
     private InputSystem_Actions actions;
 
     private void OnEnable()
@@ -20,6 +23,9 @@ public class InputReader : ScriptableObject
 
             actions.Player.Move.canceled += ctx =>
                 MoveEvent?.Invoke(Vector2.zero);
+
+            actions.Player.Jump.performed += _ =>
+                JumpEvent?.Invoke();
         }
 
         actions.Player.Enable();
