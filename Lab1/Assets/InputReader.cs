@@ -22,7 +22,6 @@ public class InputReader : ScriptableObject
             actions.Player.Move.canceled += _ =>
                 MoveEvent?.Invoke(Vector2.zero);
 
-            // ✅ Jump：按下触发一次
             actions.Player.Jump.performed += _ =>
                 JumpEvent?.Invoke();
         }

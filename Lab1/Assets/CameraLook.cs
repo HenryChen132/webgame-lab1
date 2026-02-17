@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class CameraLook : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform pitchPivot; // Player 的子物体 PitchPivot
+    [SerializeField] private Transform pitchPivot; // Player cllid obj -- PitchPivot
 
     [Header("Settings")]
     [SerializeField] private float sensitivity = 0.08f;
@@ -14,12 +14,12 @@ public class CameraLook : MonoBehaviour
     [Header("Filter")]
     [SerializeField] private float mouseDeadzone = 0.02f;
 
-    public float Yaw { get; private set; }   // ✅ 给 PlayerYawFromCamera 用
+    public float Yaw { get; private set; }   // for PlayerYawFromCamera 
     private float pitch;
 
     private void OnEnable()
     {
-        // 初始化，避免跳
+        
         pitch = Normalize(pitchPivot.localEulerAngles.x);
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
     }
@@ -33,10 +33,10 @@ public class CameraLook : MonoBehaviour
         if (Mathf.Abs(delta.x) < mouseDeadzone) delta.x = 0f;
         if (Mathf.Abs(delta.y) < mouseDeadzone) delta.y = 0f;
 
-        // ✅ 只记录 yaw，不在这里转 Player（避免跟物理打架）
+    
         Yaw += delta.x * sensitivity;
 
-        // pitch 只转 pitchPivot
+
         pitch -= delta.y * sensitivity;
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
         pitchPivot.localRotation = Quaternion.Euler(pitch, 0f, 0f);
@@ -49,7 +49,7 @@ public class CameraLook : MonoBehaviour
         return a;
     }
 
-    // UI 用
+    // UI adjustment for sensitivity
     public float Sensitivity
     {
         get => sensitivity;

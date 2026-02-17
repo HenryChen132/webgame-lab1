@@ -4,13 +4,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private InputReader inputReader;
-    [SerializeField] private Transform yawSource;   // YawPivot 或 Main Camera
+    [SerializeField] private Transform yawSource;   
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float inputDeadzone = 0.02f;
 
     [Header("Jump")]
-    [SerializeField] private float jumpVelocity = 6.5f;   // 跳的力度（调大=跳高）
-    [SerializeField] private LayerMask groundMask;        // 地面层
+    [SerializeField] private float jumpVelocity = 6.5f;   
+    [SerializeField] private LayerMask groundMask;        
     [SerializeField] private float groundCheckDistance = 0.15f;
 
     private Rigidbody rb;
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // ---- MOVE (XZ) ----
+      
         if (yawSource)
         {
             Vector3 forward = yawSource.forward; forward.y = 0f;
@@ -62,18 +62,17 @@ public class PlayerController : MonoBehaviour
 
             Vector3 delta = move * moveSpeed * Time.fixedDeltaTime;
 
-            // 只移动XZ，不改Y
+
             rb.MovePosition(rb.position + new Vector3(delta.x, 0f, delta.z));
         }
 
-        // ---- JUMP ----
         if (jumpQueued)
         {
             jumpQueued = false;
 
             if (IsGrounded())
             {
-                // 直接设置y速度最稳定（不被MovePosition覆盖）
+
                 Vector3 v = rb.linearVelocity;
                 rb.linearVelocity = new Vector3(v.x, jumpVelocity, v.z);
             }
@@ -82,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        // 从碰撞体底部向下打一条短射线
+
         Collider col = GetComponent<Collider>();
         Vector3 origin = col.bounds.center;
         origin.y = col.bounds.min.y + 0.02f;
